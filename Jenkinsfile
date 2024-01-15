@@ -1,31 +1,38 @@
 pipeline {
     agent any
-    
+
     environment {
-        AWS_REGION = 'us-east-1'
-        TF_CLI_ARGS = '-input=false'
+		AWS_REGION = 'us-east-1'
+		TF_CLI_ARGS = '-input=false'
     }
-    
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                checkout scm               
             }
         }
-
-        stage('Terraform Init') {
+        stage('Terraform Deploy') {
             steps {
+                // Run Terraform commands to deploy infrastructure
                 script {
-                    sh 'terraform init'
+                    sh '''
+                        export AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID}"
+                        export AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY}"
+                        terraform init
+                        terraform apply -auto-approve
+                    '''
                 }
             }
         }
+        // Other stages for testing, etc.
+    }
 
-        stage('Terraform Apply') {
-            steps {
-                script {
-                    sh 'terraform apply -auto-approve'
-                }
+    post {
+        always {
+            // Cleanup or additional steps that should run regardless of success or failure
+            script {
+                sh 'terraform destroy -auto-approve'
             }
         }
     }
