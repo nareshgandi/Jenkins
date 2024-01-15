@@ -29,17 +29,4 @@ pipeline {
             }
         }
     }
-
-    post {
-        always {
-            stage('Terraform Destroy') {
-                steps {
-                    script {
-                        // Uncomment the following line to destroy the resources after testing
-                        // sh 'terraform destroy -auto-approve'
-                    }
-                }
-            }
-        }
-    }
 }
