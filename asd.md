@@ -5,7 +5,9 @@
 
 Enable `cloudsql.logical_decoding` flag: In Cloud SQL, you can enable logical decoding by setting the `cloudsql.logical_decoding` flag to `on`. To change this flag, you can use the Cloud SQL Console or the `gcloud` command-line tool. 
 
-Detailed instructions for enabling or disabling flags in Cloud SQL are available in the link:https://cloud.google.com/sql/docs/postgres/flags/[official documentation]. Once the flag is set, it automatically adjusts the `wal_level` configuration parameter to `logical`. You can verify this setting by running the following query:
+Detailed instructions for enabling or disabling flags in Cloud SQL are available in the link:https://cloud.google.com/sql/docs/postgres/flags/[official documentation]. Once the flag is set, it automatically adjusts the `wal_level` configuration parameter to `logical`. 
+
+You can verify this setting by running the following query:
 
 ```
 SHOW wal_level;
